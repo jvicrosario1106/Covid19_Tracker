@@ -1,0 +1,93 @@
+{% extends 'covidapp/base.html' %}
+
+{% block title %}Covid Tracker{% endblock %}
+
+
+{% block content %}
+
+<div class="container mt-3 text-white border p-3 shadow p-3 mb-5 bg-white rounded">
+    <div class="card-columns">
+      <div class="card bg-primary">
+        <div class="card-body text-center">
+           <h2>New Confirmed</h2> 
+          <h3 class="card-text">{{NewConfirmed}}</h3>
+        </div>
+      </div>
+      <div class="card bg-warning">
+        <div class="card-body text-center">
+            <h2>Total Confirmed</h2> 
+            <h3 class="card-text">{{TotalConfirmed}}</h3>
+        </div>
+      </div>
+      <div class="card bg-success">
+        <div class="card-body text-center">
+            <h2>New Deaths</h2> 
+            <h3 class="card-text">{{NewDeaths}}</h3>
+        </div>
+      </div>
+      <div class="card bg-danger">
+        <div class="card-body text-center">
+            <h2>Total Deaths</h2> 
+            <h3 class="card-text">{{TotalDeaths}}</h3>
+        </div>
+      </div>  
+      <div class="card bg-dark">
+        <div class="card-body text-center">
+            <h2>New Recovered</h2> 
+            <h3 class="card-text">{{NewRecovered}}</h3>
+        </div>
+      </div>
+      <div class="card bg-info">
+        <div class="card-body text-center">
+            <h2>Total Recovered</h2> 
+            <h3 class="card-text">{{TotalRecovered}}</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- TABLE -->
+  <div class="container">
+    <input type="text" class="form-control search col-lg-3 float-right mb-3" placeholder="Seach Country...">
+    <table class="table table-hover table-dark text-center">
+        <thead>
+          <tr>
+            <th scope="col">Country </th>
+            <th scope="col">New Confirmed</th>
+            <th scope="col">Total Confirmed</th>
+            <th scope="col">New Deaths</th>
+            <th scope="col">Total Deaths</th>
+            <th scope="col">New Recovered</th>
+            <th scope="col">Total Recovered</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for c,nc,tc,nd,td,nr,tr in summary %}
+          <tr>
+            <td>{{c}}</td>
+            <td>{{nc}}</td>
+            <td>{{tc}}</td>
+            <td>{{nd}}</td>
+            <td>{{td}}</td>
+            <td>{{nr}}</td>
+            <td>{{tr}}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+  </div>
+
+
+  <script>
+    $(document).ready(function(){
+      $(".search").on("keyup",function(){
+        var value = $(this).val().toLowerCase()
+        $("tbody tr").filter(function(){
+          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        })
+      })
+    })
+  </script>
+
+{% endblock %}
